@@ -1,0 +1,63 @@
+# =========================
+# Project-specific files
+# =========================
+AGENTS.md
+
+# =========================
+# Operating System files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Dependencies
+# =========================
+node_modules/
+vendor/
+packages/
+
+# =========================
+# Build / output directories
+# =========================
+dist/
+build/
+out/
+target/
+
+# =========================
+# Temporary files
+# =========================
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+
+# =========================
+# IDE / editors
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# Coverage / reports
+# =========================
+coverage/
+reports/
+.nyc_output/
+htmlcov/
