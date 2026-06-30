@@ -16,3 +16,65 @@ body {
   color: $color-text;
   background-color: $color-bg;
 }
+
+input,
+button {
+  font-family: inherit;
+  font-size: 13px;
+  border-radius: $border-radius-md;
+  border: 0.5px solid $color-border;
+  background: $color-surface;
+  color: $color-text;
+}
+
+input {
+  height: 38px;
+  padding: 0 12px;
+}
+
+input:focus {
+  outline: none;
+  border-color: $color-primary;
+  box-shadow: 0 0 0 2px rgba(54, 143, 63, 0.15);
+}
+
+button {
+  height: 34px;
+  padding: 0 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+button:hover {
+  background: $color-surface-1;
+}
+
+textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+  border-radius: $border-radius-md;
+  border: 0.5px solid $color-border;
+  padding: 10px 12px;
+  resize: vertical;
+  color: $color-text;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: $color-primary;
+  box-shadow: 0 0 0 2px rgba(54, 143, 63, 0.15);
+}
+
+select {
+  font-family: inherit;
+  font-size: 13px;
+  border-radius: $border-radius-md;
+  border: 0.5px solid $color-border;
+  background: $color-surface;
+  color: $color-text;
+  height: 38px;
+  padding: 0 12px;
+}

@@ -1,0 +1,70 @@
+@use '../../styles/variables' as *;
+
+.body-grid {
+  display: flex;
+}
+
+.col-left {
+  width: 33.333%;
+  border-right: 0.5px solid $color-border;
+  padding: 20px;
+}
+
+.col-right {
+  width: 66.667%;
+  padding: 20px 26px;
+}
+
+.top-row-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background: $color-primary;
+  color: $color-surface;
+  border: none;
+  height: 42px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover {
+    background: #2d7836;
+  }
+}
+
+.plus-icon {
+  font-size: 16px;
+}
+
+.empty-state {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  border: 1px dashed $color-border;
+  border-radius: $border-radius-xl;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  p {
+    color: $color-text-secondary;
+    font-size: 14px;
+    max-width: 340px;
+  }
+}
+
+.empty-icon {
+  font-size: 40px;
+  color: $color-primary-light;
+  margin-bottom: 14px;
+}

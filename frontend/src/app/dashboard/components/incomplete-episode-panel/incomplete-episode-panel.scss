@@ -1,0 +1,32 @@
+@use '../../../../styles/variables' as *;
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.warn-icon {
+  font-size: 17px;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.badge-count {
+  background: $color-danger-bg;
+  color: $color-danger;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.list-card {
+  border: 0.5px solid $color-border;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  margin-bottom: 26px;
+}

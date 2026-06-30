@@ -1,1 +1,24 @@
-<h1>Dashboard</h1>
+<app-search-bar />
+<div class="body-grid">
+  <div class="col-left">
+    <app-incomplete-episode-panel (completarEpisode)="openAccidentForm($event)"/>
+    <app-agenda-panel />
+  </div>
+  <div class="col-right">
+    <div class="top-row-right">
+      <button class="btn-primary" (click)="openNewAccident()">
+        <span class="plus-icon">+</span>
+        Nuevo accidente
+      </button>
+    </div>
+    @if (showIncidentForm()) {
+      <app-accident-form [accidentId]="selectedAccidentId()" (formClosing)="closeForm()"/>
+    } @else {
+      <div class="empty-state">
+        <span class="empty-icon">&#128196;</span>
+        <h2>A&ntilde;ade un nuevo accidente</h2>
+        <p>Selecciona un paciente de la lista o crea un nuevo registro para comenzar.</p>
+      </div>
+    }
+  </div>
+</div>

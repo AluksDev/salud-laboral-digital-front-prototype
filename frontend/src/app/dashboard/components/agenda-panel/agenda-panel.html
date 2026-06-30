@@ -1,0 +1,25 @@
+<div class="section-head">
+  <span class="cal-icon">&#128197;</span>
+  <h3>Agenda</h3>
+</div>
+<div class="agenda-toggle">
+  <div class="active">Hoy</div>
+  <div>Esta semana</div>
+</div>
+@for (item of agendaItems(); track $index) {
+  <div class="agenda-card">
+    <div class="agenda-top">
+      <div>
+        <p class="agenda-name">{{ item.patientName }}</p>
+        <p class="agenda-phone">{{ item.phone }}</p>
+      </div>
+      <span class="badge-tag">{{ item.badgeLabel }}</span>
+    </div>
+    <div class="agenda-instr">
+      <span class="flask-icon">&#128137;</span>
+      {{ item.instruction }}
+    </div>
+  </div>
+} @empty {
+  <p style="font-size: 13px; color: var(--text-secondary, #5B6760);">No hay seguimientos pendientes</p>
+}

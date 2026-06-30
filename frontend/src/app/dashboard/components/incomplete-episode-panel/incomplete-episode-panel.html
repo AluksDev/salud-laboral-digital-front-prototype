@@ -1,0 +1,20 @@
+<div class="section-head">
+  <span class="warn-icon">&#9888;&#65039;</span>
+  <h3>Episodios incompletos</h3>
+  @if (badgeCount() > 0) {
+    <span class="badge-count">{{ badgeCount() }}</span>
+  }
+</div>
+<div class="list-card">
+  @for (episode of episodes(); track episode.accidentId) {
+    <app-episode-card
+      [patientName]="episode.patientName"
+      [description]="episode.description"
+      (completar)="completarEpisode.emit(episode.accidentId)"
+    />
+  } @empty {
+    <div class="list-row">
+      <p style="color: var(--text-secondary, #5B6760); font-size: 13px;">No hay episodios incompletos</p>
+    </div>
+  }
+</div>

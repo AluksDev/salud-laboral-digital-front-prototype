@@ -1,0 +1,186 @@
+<div class="form-card">
+  <h2>Nuevo accidente</h2>
+  <p class="sub">Registro del trabajador expuesto y datos del episodio</p>
+
+  <div [formGroup]="accidentForm">
+    <div class="form-section-title">
+      <span class="section-icon">&#128100;</span>
+      Datos del trabajador
+    </div>
+    <div class="field-grid">
+      <div class="field">
+        <label for="fecha">Fecha del accidente</label>
+        <input id="fecha" type="date" formControlName="accidentDate">
+      </div>
+      <div class="field">
+        <label for="dni">DNI</label>
+        <input id="dni" type="text" placeholder="00000000X" formControlName="dni">
+      </div>
+      <div class="field">
+        <label for="telefono">Tel&eacute;fono</label>
+        <input id="telefono" type="text" placeholder="600 000 000" formControlName="phone">
+      </div>
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" placeholder="Nombre" formControlName="name">
+      </div>
+      <div class="field">
+        <label for="apellidos">Apellidos</label>
+        <input id="apellidos" type="text" placeholder="Apellidos" formControlName="lastName">
+      </div>
+      <div class="field">
+        <label for="categoria">Categor&iacute;a profesional</label>
+        <select id="categoria" formControlName="category">
+          <option>Enfermero/a</option>
+          <option>Auxiliar de enfermer&iacute;a</option>
+          <option>M&eacute;dico/a</option>
+          <option>T&eacute;cnico de laboratorio</option>
+          <option>Otra</option>
+        </select>
+      </div>
+      <div class="field" style="grid-column: span 1;">
+        <label for="servicio">Servicio / Unidad</label>
+        <input id="servicio" type="text" placeholder="Ej. Urgencias" formControlName="serviceUnit">
+      </div>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="inmune-hb" formControlName="isImmuneVhb">
+      <label for="inmune-hb">Trabajador inmune frente a Hepatitis B (VHB)</label>
+    </div>
+
+    <div class="form-section-title">
+      <span class="section-icon">&#128221;</span>
+      Observaciones
+    </div>
+    <textarea rows="3" placeholder="Descripci&oacute;n del accidente, observaciones adicionales..." formControlName="observations"></textarea>
+
+    <div class="form-section-title">
+      <span class="section-icon">&#129440;</span>
+      Serolog&iacute;as
+    </div>
+    <div class="serology-cols">
+      <div>
+        <div class="serology-col-title">
+          <span class="section-icon">&#128137;</span>
+          Serolog&iacute;a expuesto (trabajador)
+        </div>
+        <div class="vcheck" formGroupName="workerSerology">
+          <div class="sero-row" formGroupName="vih">
+            <label class="sero-check">
+              <input type="checkbox" formControlName="checked" />
+              <span>VIH</span>
+            </label>
+            @if (accidentForm.get('workerSerology.vih.checked')?.value) {
+              <select formControlName="result">
+                <option value="positive">Positivo</option>
+                <option value="negative">Negativo</option>
+              </select>
+            }
+          </div>
+        </div>
+        <div class="vcheck" formGroupName="workerSerology">
+          <div class="sero-row" formGroupName="vhb">
+            <label class="sero-check">
+              <input type="checkbox" formControlName="checked" />
+              <span>Hepatitis B (VHB)</span>
+            </label>
+            @if (accidentForm.get('workerSerology.vhb.checked')?.value) {
+              <select formControlName="result">
+                <option value="positive">Positivo</option>
+                <option value="negative">Negativo</option>
+              </select>
+            }
+          </div>
+        </div>
+        <div class="vcheck" formGroupName="workerSerology">
+          <div class="sero-row" formGroupName="vhc">
+            <label class="sero-check">
+              <input type="checkbox" formControlName="checked" />
+              <span>Hepatitis C (VHC)</span>
+            </label>
+            @if (accidentForm.get('workerSerology.vhc.checked')?.value) {
+              <select formControlName="result">
+                <option value="positive">Positivo</option>
+                <option value="negative">Negativo</option>
+              </select>
+            }
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="serology-col-title">
+          <span class="section-icon">&#128167;</span>
+          Serolog&iacute;a fuente
+        </div>
+        <div class="source-type-group">
+          <label class="source-radio">
+            <input type="radio" formControlName="sourceType" value="unknown" />
+            <span>Fuente desconocida</span>
+          </label>
+          <label class="source-radio">
+            <input type="radio" formControlName="sourceType" value="known" />
+            <span>Fuente conocida</span>
+          </label>
+        </div>
+        @if (accidentForm.controls.sourceType.value === 'known') {
+          <div class="vcheck" formGroupName="sourceSerology">
+            <div class="sero-row" formGroupName="vih">
+              <label class="sero-check">
+                <input type="checkbox" formControlName="checked" />
+                <span>VIH</span>
+              </label>
+              @if (accidentForm.get('sourceSerology.vih.checked')?.value) {
+                <select formControlName="result">
+                  <option value="positive">Positivo</option>
+                  <option value="negative">Negativo</option>
+                </select>
+              }
+            </div>
+          </div>
+          <div class="vcheck" formGroupName="sourceSerology">
+            <div class="sero-row" formGroupName="vhb">
+              <label class="sero-check">
+                <input type="checkbox" formControlName="checked" />
+                <span>Hepatitis B (VHB)</span>
+              </label>
+              @if (accidentForm.get('sourceSerology.vhb.checked')?.value) {
+                <select formControlName="result">
+                  <option value="positive">Positivo</option>
+                  <option value="negative">Negativo</option>
+                </select>
+              }
+            </div>
+          </div>
+          <div class="vcheck" formGroupName="sourceSerology">
+            <div class="sero-row" formGroupName="vhc">
+              <label class="sero-check">
+                <input type="checkbox" formControlName="checked" />
+                <span>Hepatitis C (VHC)</span>
+              </label>
+              @if (accidentForm.get('sourceSerology.vhc.checked')?.value) {
+                <select formControlName="result">
+                  <option value="positive">Positivo</option>
+                  <option value="negative">Negativo</option>
+                </select>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <button class="doc-btn">
+    <span class="clip-icon">&#128206;</span>
+    A&ntilde;adir documentos (PDF)
+  </button>
+
+  <div class="form-footer">
+    <button class="btn-cancel" (click)="closeForm()">Cancelar</button>
+    <button class="btn-primary" (click)="saveForm()">
+      <span class="check-icon">&#10003;</span>
+      Guardar accidente
+    </button>
+  </div>
+</div>
