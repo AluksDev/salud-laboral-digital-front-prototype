@@ -7,6 +7,8 @@ import { forkJoin, map, Observable, of, switchMap, take } from 'rxjs';
 import { SourceForm } from '../source-form/source-form';
 import { Worker } from '../../../models/worker.model';
 import { Source } from '../../../models/source.model';
+import { Accident, CreateAccidentDto } from '../../../models/accident.model';
+import { SerologyResult } from '../../../models/serology.model';
 
 @Component({
   selector: 'app-accident-form',
@@ -195,10 +197,27 @@ export class AccidentForm {
       workerId: workerId$,
       sourceIds: forkJoin(sources$)
     }).subscribe(({ workerId, sourceIds }) => {
-      console.log("worker id: ", workerId);
-      console.log("sources ids: ", sourceIds);
-      // both are guaranteed complete here — now build the Accident
+      const serologyData = formData.workerSerology
+      const serology = (serologyData: any): SerologyResult => ({
+        vih: serologyData.vih.result,
+        vhb: serologyData.vhb.result,
+        vhc: serologyData.vhc.result
+      })
+      const newAccident: CreateAccidentDto = {
+        workerId: workerId,
+        accidentDate: formData.accidentDate,
+        sourceIds: sourceIds,
+        workerConsent: formData.workerConsent === 'yes' ? true : false,
+        document: formData.documentFile ?? undefined,
+        observations: formData.observations,
+        workerSerology: serology(serologyData),
+      }
+
+      this.accidentService.saveAccident(newAccident).subscribe(res => {
+        if (!res) return;
+        this.accidentForm.reset();
+        this.accidentService.refreshIncomplete();
+      })
     });
-    console.log(formData)
   }
 }

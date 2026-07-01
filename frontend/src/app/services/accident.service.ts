@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import type { Accident } from '../models/accident.model';
-import { MOCK_ACCIDENTS, getAccidentById, getIncompleteAccidents } from '../mock/mock-data';
+import { of, Observable, BehaviorSubject } from 'rxjs';
+import type { Accident, CreateAccidentDto } from '../models/accident.model';
+import { MOCK_ACCIDENTS, getAccidentById, getIncompleteAccidents, saveNewAccident } from '../mock/mock-data';
 
 @Injectable({ providedIn: 'root' })
 export class AccidentService {
+  private accidentsSubject = new BehaviorSubject<Accident[]>(getIncompleteAccidents());
+
   getAll(): Observable<Accident[]> {
     return of(MOCK_ACCIDENTS);
   }
@@ -14,11 +16,15 @@ export class AccidentService {
   }
 
   getIncomplete(): Observable<Accident[]> {
-    return of(getIncompleteAccidents());
+    return this.accidentsSubject.asObservable();
   }
 
-  saveAccident(accidentData: Accident): Observable<Accident | null> {
-    console.log(accidentData)
-    return of(null)
+  refreshIncomplete() {
+    const updated = getIncompleteAccidents(); // simulate new data
+    this.accidentsSubject.next(updated);
+  }
+
+  saveAccident(accidentData: CreateAccidentDto): Observable<Accident> {
+    return of(saveNewAccident(accidentData));
   }
 }

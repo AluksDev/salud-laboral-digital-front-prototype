@@ -1,6 +1,6 @@
 import type { Worker } from '../models/worker.model';
 import type { Source } from '../models/source.model';
-import type { Accident } from '../models/accident.model';
+import type { Accident, AccidentStatus, CreateAccidentDto } from '../models/accident.model';
 import type { AgendaItem } from '../models/agenda-item.model';
 
 export const MOCK_WORKERS: Worker[] = [
@@ -30,7 +30,7 @@ export const MOCK_ACCIDENTS: Accident[] = [
   { id: 'a2', workerId: 'w2', accidentDate: '2026-06-20', sourceIds: ['s7'], workerConsent: true, observations: 'Salpicadura de sangre en mucosa ocular durante intubación. Fuente desconocida.', workerSerology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-20T14:15:00Z' },
   { id: 'a3', workerId: 'w3', accidentDate: '2026-06-15', sourceIds: ['s2'], workerConsent: false, observations: 'Corte con bisturí contaminado en quirófano.', workerSerology: { vih: 'negative', vhb: 'negative', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-15T09:45:00Z' },
   { id: 'a4', workerId: 'w4', accidentDate: '2026-04-15', sourceIds: ['s3'], workerConsent: true, observations: 'Pinchazo con aguja en box de urgencias.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'complete', createdAt: '2026-04-15T16:20:00Z' },
-  { id: 'a5', workerId: 'w5', accidentDate: '2026-03-01', sourceIds: ['s8'], workerConsent: true, observations: 'Salpicadura en piel no intacta. Fuente desconocida.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'incomplete', createdAt: '2026-03-01T11:00:00Z' },
+  { id: 'a5', workerId: 'w5', accidentDate: '2026-03-01', sourceIds: ['s8'], workerConsent: true, observations: 'Salpicadura en piel no intacta. Fuente desconocida.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'complete', createdAt: '2026-03-01T11:00:00Z' },
   { id: 'a6', workerId: 'w6', accidentDate: '2026-01-10', sourceIds: ['s4'], workerConsent: true, observations: 'Pinchazo con aguja al procesar muestra en laboratorio.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'closed', createdAt: '2026-01-10T08:30:00Z' },
   { id: 'a7', workerId: 'w7', accidentDate: '2026-06-28', sourceIds: ['s5', 's6'], workerConsent: true, observations: 'Doble exposición: pinchazo con aguja y salpicadura mucosa. Una fuente conocida y otra desconocida.', workerSerology: { vih: 'negative', vhb: 'negative', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-28T13:45:00Z' },
 ];
@@ -65,20 +65,15 @@ export function buildWorkerShortName(worker: Worker): string {
 }
 
 export function buildEpisodeDescription(accident: Accident, worker: Worker, sources: Source[] = []): string {
-  if (accident.sourceIds.length && sources.length) {
-    const source = sources[0];
-
-    if (source.serology.vih === 'pending' || source.serology.vhb === 'pending' || source.serology.vhc === 'pending') {
-      return `Fuente ${source.anNumber} — faltan resultados serológicos`;
+  const missingWorkerSerology = Object.values(accident.workerSerology).some(s => s === 'pending');
+  if (missingWorkerSerology) return 'Faltan serologia trabajador';
+  for (let source of sources) {
+    const missingSourceSerology = Object.values(source.serology).some(s => s.result === 'pending');
+    if (missingSourceSerology) {
+      return 'Faltan serologia fuente';
     }
-    return `Fuente ${source.anNumber} — serología completa`;
   }
-
-  if (accident.workerSerology.vih === 'pending' || accident.workerSerology.vhb === 'pending' || accident.workerSerology.vhc === 'pending') {
-    return 'Falta serología basal del trabajador';
-  }
-
-  return 'Pendiente de revisión';
+  return '-';
 }
 
 export function getWorkerByDni(dni: string) {
@@ -104,7 +99,33 @@ export function addSource(source: Omit<Source, 'id'>): Source {
     id: newId
   }
   MOCK_SOURCES.push(newSource);
-  console.log(newId)
-  console.log(newSource)
   return newSource;
+}
+
+export function saveNewAccident(accidentData: CreateAccidentDto): Accident {
+  const lastId = MOCK_ACCIDENTS[MOCK_ACCIDENTS.length - 1].id.split('a')[1];
+  const newId = `a${Number(lastId)}`;
+  let status = 'complete';
+  for (let id of accidentData.sourceIds) {
+    const source = getSourceById(id);
+    if (source){
+      const hasPending = Object.values(source.serology).some(item => item.result === "pending");
+      if (hasPending) {
+        status = 'incomplete';
+        break;
+      }
+    }
+  }
+  const hasPendingWorkerSerology = Object.values(accidentData.workerSerology).some(item => item.result === "pending");
+  if (hasPendingWorkerSerology) {
+    status = 'incomplete';
+  }
+  const newAccident = {
+    ...accidentData,
+    id: newId,
+    status: status as AccidentStatus,
+    createdAt: Date.now().toLocaleString()
+  }
+  MOCK_ACCIDENTS.push(newAccident);
+  return newAccident;
 }
