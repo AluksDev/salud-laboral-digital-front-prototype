@@ -1,0 +1,123 @@
+@use '../../../../styles/variables' as *;
+
+.source-card {
+  border: 0.5px solid $color-border;
+  border-radius: $border-radius-xl;
+  padding: 20px;
+  margin-bottom: 16px;
+  background: $color-surface-1;
+}
+
+.source-header {
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-icon {
+  font-size: 15px;
+}
+
+.source-type-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.source-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+
+  input {
+    width: auto;
+    height: auto;
+    accent-color: $color-primary;
+    margin: 0;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+
+  label {
+    font-size: 12px;
+    color: $color-text-secondary;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+.form-section-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: $color-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 18px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vcheck {
+  padding: 9px 10px;
+  border: 0.5px solid $color-border;
+  border-radius: $border-radius-md;
+  margin-bottom: 8px;
+  background: $color-surface;
+}
+
+.sero-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  select {
+    height: 28px;
+    font-size: 12px;
+    padding: 0 6px;
+    width: auto;
+    min-width: 100px;
+  }
+}
+
+.sero-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex: 1;
+
+  input {
+    width: 16px;
+    height: 16px;
+    accent-color: $color-primary;
+    margin: 0;
+  }
+
+  span {
+    font-size: 13px;
+  }
+}

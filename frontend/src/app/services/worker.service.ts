@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import type { Worker } from '../models/worker.model';
-import { MOCK_WORKERS, getWorkerById, buildWorkerDisplayName } from '../mock/mock-data';
+import { MOCK_WORKERS, getWorkerById, buildWorkerDisplayName, getWorkerByDni, createWorker } from '../mock/mock-data';
 
 @Injectable({ providedIn: 'root' })
 export class WorkerService {
@@ -20,6 +20,13 @@ export class WorkerService {
       w.name.toLowerCase().includes(q) ||
       w.lastName.toLowerCase().includes(q)
     ));
+  }
+
+  getByDniorCreate(worker: Omit<Worker, 'id'>): Observable<string> {
+    const workerData = getWorkerByDni(worker.dni);
+    if (workerData) return of(workerData.id);
+    const newWorker = createWorker(worker);
+    return of(newWorker.id);
   }
 
   buildDisplayName(worker: Worker): string {

@@ -51,130 +51,126 @@
 
     <div class="form-section-title">
       <span class="section-icon">&#128221;</span>
+      Consentimientos
+    </div>
+    <div class="consent-group">
+      <span class="consent-label">Consentimiento del trabajador por escrito</span>
+      <div class="radio-row">
+        <label class="radio-option">
+          <input type="radio" formControlName="workerConsent" value="yes">
+          <span>S&iacute;</span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" formControlName="workerConsent" value="no">
+          <span>No</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section-title">
+      <span class="section-icon">&#128221;</span>
       Observaciones
     </div>
-    <textarea rows="3" placeholder="Descripci&oacute;n del accidente, observaciones adicionales..." formControlName="observations"></textarea>
+    <textarea rows="3" placeholder="Observaciones adicionales..." formControlName="observations"></textarea>
 
     <div class="form-section-title">
       <span class="section-icon">&#129440;</span>
-      Serolog&iacute;as
+      Serolog&iacute;as del trabajador
     </div>
-    <div class="serology-cols">
-      <div>
-        <div class="serology-col-title">
-          <span class="section-icon">&#128137;</span>
-          Serolog&iacute;a expuesto (trabajador)
-        </div>
-        <div class="vcheck" formGroupName="workerSerology">
-          <div class="sero-row" formGroupName="vih">
-            <label class="sero-check">
-              <input type="checkbox" formControlName="checked" />
-              <span>VIH</span>
-            </label>
-            @if (accidentForm.get('workerSerology.vih.checked')?.value) {
-              <select formControlName="result">
-                <option value="positive">Positivo</option>
-                <option value="negative">Negativo</option>
-              </select>
-            }
-          </div>
-        </div>
-        <div class="vcheck" formGroupName="workerSerology">
-          <div class="sero-row" formGroupName="vhb">
-            <label class="sero-check">
-              <input type="checkbox" formControlName="checked" />
-              <span>Hepatitis B (VHB)</span>
-            </label>
-            @if (accidentForm.get('workerSerology.vhb.checked')?.value) {
-              <select formControlName="result">
-                <option value="positive">Positivo</option>
-                <option value="negative">Negativo</option>
-              </select>
-            }
-          </div>
-        </div>
-        <div class="vcheck" formGroupName="workerSerology">
-          <div class="sero-row" formGroupName="vhc">
-            <label class="sero-check">
-              <input type="checkbox" formControlName="checked" />
-              <span>Hepatitis C (VHC)</span>
-            </label>
-            @if (accidentForm.get('workerSerology.vhc.checked')?.value) {
-              <select formControlName="result">
-                <option value="positive">Positivo</option>
-                <option value="negative">Negativo</option>
-              </select>
-            }
-          </div>
+    <div formGroupName="workerSerology">
+      <div class="vcheck">
+        <div class="sero-row" formGroupName="vih">
+          <label class="sero-check">
+            <input type="checkbox" formControlName="checked" />
+            <span>VIH</span>
+          </label>
+          @if (accidentForm.get('workerSerology.vih.checked')?.value) {
+            <select formControlName="result">
+              <option value="positive">Positivo</option>
+              <option value="negative">Negativo</option>
+            </select>
+          }
         </div>
       </div>
-      <div>
-        <div class="serology-col-title">
-          <span class="section-icon">&#128167;</span>
-          Serolog&iacute;a fuente
-        </div>
-        <div class="source-type-group">
-          <label class="source-radio">
-            <input type="radio" formControlName="sourceType" value="unknown" />
-            <span>Fuente desconocida</span>
+      <div class="vcheck">
+        <div class="sero-row" formGroupName="vhb">
+          <label class="sero-check">
+            <input type="checkbox" formControlName="checked" />
+            <span>Hepatitis B (VHB)</span>
           </label>
-          <label class="source-radio">
-            <input type="radio" formControlName="sourceType" value="known" />
-            <span>Fuente conocida</span>
-          </label>
+          @if (accidentForm.get('workerSerology.vhb.checked')?.value) {
+            <select formControlName="result">
+              <option value="positive">Positivo</option>
+              <option value="negative">Negativo</option>
+            </select>
+          }
         </div>
-        @if (accidentForm.controls.sourceType.value === 'known') {
-          <div class="vcheck" formGroupName="sourceSerology">
-            <div class="sero-row" formGroupName="vih">
-              <label class="sero-check">
-                <input type="checkbox" formControlName="checked" />
-                <span>VIH</span>
-              </label>
-              @if (accidentForm.get('sourceSerology.vih.checked')?.value) {
-                <select formControlName="result">
-                  <option value="positive">Positivo</option>
-                  <option value="negative">Negativo</option>
-                </select>
-              }
-            </div>
-          </div>
-          <div class="vcheck" formGroupName="sourceSerology">
-            <div class="sero-row" formGroupName="vhb">
-              <label class="sero-check">
-                <input type="checkbox" formControlName="checked" />
-                <span>Hepatitis B (VHB)</span>
-              </label>
-              @if (accidentForm.get('sourceSerology.vhb.checked')?.value) {
-                <select formControlName="result">
-                  <option value="positive">Positivo</option>
-                  <option value="negative">Negativo</option>
-                </select>
-              }
-            </div>
-          </div>
-          <div class="vcheck" formGroupName="sourceSerology">
-            <div class="sero-row" formGroupName="vhc">
-              <label class="sero-check">
-                <input type="checkbox" formControlName="checked" />
-                <span>Hepatitis C (VHC)</span>
-              </label>
-              @if (accidentForm.get('sourceSerology.vhc.checked')?.value) {
-                <select formControlName="result">
-                  <option value="positive">Positivo</option>
-                  <option value="negative">Negativo</option>
-                </select>
-              }
-            </div>
-          </div>
+      </div>
+      <div class="vcheck">
+        <div class="sero-row" formGroupName="vhc">
+          <label class="sero-check">
+            <input type="checkbox" formControlName="checked" />
+            <span>Hepatitis C (VHC)</span>
+          </label>
+          @if (accidentForm.get('workerSerology.vhc.checked')?.value) {
+            <select formControlName="result">
+              <option value="positive">Positivo</option>
+              <option value="negative">Negativo</option>
+            </select>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section-title">
+      <span class="section-icon">&#128279;</span>
+      Fuente(s)
+    </div>
+
+    <div formArrayName="sources">
+      @for (sourceGroup of sourceGroups; track sourceGroup; let i = $index) {
+        <app-source-form [sourceFormGroup]="sourceGroup" [sourceIndex]="i" />
+        @if (sources.length > 1) {
+          <button type="button" class="btn-remove-source" (click)="removeSource(i)">
+            Eliminar fuente {{ i + 1 }}
+          </button>
         }
-      </div>
+      }
+    </div>
+
+    @if (sources.length < 2) {
+      <button type="button" class="btn-add-source" (click)="addSource()">
+        + A&ntilde;adir otra fuente
+      </button>
+    }
+
+    <div class="form-section-title">
+      <span class="section-icon">&#128206;</span>
+      Documentos
+    </div>
+    <div class="file-upload">
+      <input
+        type="file"
+        accept=".pdf"
+        id="pdf-upload"
+        class="file-input"
+        (change)="onFileSelected($event)"
+      />
+      <label for="pdf-upload" class="file-label">
+        @if (selectedFileName) {
+          <span class="file-name">{{ selectedFileName }}</span>
+          <span class="file-change">Cambiar archivo</span>
+        } @else {
+          <span class="file-placeholder">Adjuntar documento PDF</span>
+        }
+      </label>
+      @if (selectedFileName) {
+        <button type="button" class="file-remove" (click)="removeFile()">
+          &times;
+        </button>
+      }
     </div>
   </div>
-
-  <button class="doc-btn">
-    <span class="clip-icon">&#128206;</span>
-    A&ntilde;adir documentos (PDF)
-  </button>
 
   <div class="form-footer">
     <button class="btn-cancel" (click)="closeForm()">Cancelar</button>

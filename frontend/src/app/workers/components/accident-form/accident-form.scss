@@ -80,32 +80,28 @@
   }
 }
 
-.serology-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+.consent-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
 }
 
-.serology-col-title {
+.consent-label {
   font-size: 13px;
+  color: $color-text;
   font-weight: 500;
-  margin-bottom: 10px;
+}
+
+.radio-row {
+  display: flex;
+  gap: 16px;
+}
+
+.radio-option {
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.source-type-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-.source-radio {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   font-size: 13px;
   cursor: pointer;
 
@@ -159,16 +155,66 @@
   }
 }
 
-.doc-btn {
-  margin-top: 24px;
+.btn-add-source {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  border: 1px dashed $color-border;
+  border-radius: $border-radius-md;
+  background: transparent;
+  color: $color-primary;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-primary-bg;
+    border-color: $color-primary-light;
+  }
+}
+
+.btn-remove-source {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 0.5px solid #e74c3c;
+  border-radius: $border-radius-md;
+  background: transparent;
+  color: #e74c3c;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: #fdf0ef;
+  }
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border: 1px dashed $color-border;
   border-radius: 10px;
   background: $color-surface-1;
   width: 100%;
   height: 54px;
-  justify-content: center;
-  color: $color-text-secondary;
+  cursor: pointer;
   font-size: 13px;
+  color: $color-text-secondary;
 
   &:hover {
     border-color: $color-primary-light;
@@ -177,8 +223,34 @@
   }
 }
 
-.clip-icon {
-  font-size: 18px;
+.file-name {
+  color: $color-text;
+  font-weight: 500;
+}
+
+.file-change {
+  color: $color-primary;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.file-placeholder {
+  color: $color-text-secondary;
+}
+
+.file-remove {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #e74c3c;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+
+  &:hover {
+    background: #fdf0ef;
+    border-radius: 4px;
+  }
 }
 
 .form-footer {

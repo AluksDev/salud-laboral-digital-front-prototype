@@ -27,11 +27,12 @@ export class IncompleteEpisodePanel {
   episodes = computed(() =>
     this.accidents().map(accident => {
       const worker = this.workers().find(w => w.id === accident.workerId);
-      const source = accident.sourceId ? this.sources().find(s => s.id === accident.sourceId) : undefined;
+      const sourceId = accident.sourceIds[0] ?? null;
+      const source = sourceId ? this.sources().find(s => s.id === sourceId) : undefined;
       return {
         accidentId: accident.id,
         patientName: worker ? buildWorkerShortName(worker) : '—',
-        description: worker ? buildEpisodeDescription(accident, worker, source) : '—',
+        description: worker ? buildEpisodeDescription(accident, worker, source ? [source] : []) : '—',
       };
     })
   );

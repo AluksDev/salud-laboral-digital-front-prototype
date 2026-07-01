@@ -1,0 +1,100 @@
+<div class="source-card" [formGroup]="sourceFormGroup()">
+  <div class="source-header">
+    <span class="section-icon">&#128279;</span>
+    <span class="source-title">Fuente {{ sourceIndex() + 1 }}</span>
+  </div>
+
+  <div class="source-type-group">
+    <label class="source-radio">
+      <input type="radio" formControlName="type" value="unknown" />
+      <span>Fuente desconocida</span>
+    </label>
+    <label class="source-radio">
+      <input type="radio" formControlName="type" value="known" />
+      <span>Fuente conocida</span>
+    </label>
+  </div>
+
+  @if (sourceFormGroup().get('type')?.value === 'known') {
+    <div class="field">
+      <label for="anNumber">AN (N.º de Historia)</label>
+      <input
+        id="anNumber"
+        type="text"
+        placeholder="000000"
+        formControlName="anNumber"
+      />
+    </div>
+
+    <div class="field">
+      <label for="consent">Consentimiento de la fuente</label>
+      <select id="consent" formControlName="consent">
+        <option value="none">No</option>
+        <option value="verbal">Verbal</option>
+        <option value="written">Por escrito</option>
+      </select>
+    </div>
+  }
+
+  @if (sourceFormGroup().get('type')?.value === 'known') {
+    <div class="form-section-title">
+      <span class="section-icon">&#129440;</span>
+      Serologías fuente {{ sourceIndex() + 1 }}
+    </div>
+
+    <div formGroupName="serology">
+      <div class="vcheck">
+        <div class="sero-row" formGroupName="vih">
+          <label class="sero-check">
+            <input type="checkbox" formControlName="checked" />
+            <span>VIH</span>
+          </label>
+          @if (sourceFormGroup().get('serology.vih.checked')?.value) {
+            <select formControlName="result">
+              <option value="positive">Positivo</option>
+              <option value="negative">Negativo</option>
+            </select>
+          }
+        </div>
+      </div>
+      <div class="vcheck">
+        <div class="sero-row" formGroupName="vhb">
+          <label class="sero-check">
+            <input type="checkbox" formControlName="checked" />
+            <span>Hepatitis B (VHB)</span>
+          </label>
+          @if (sourceFormGroup().get('serology.vhb.checked')?.value) {
+            <select formControlName="result">
+              <option value="positive">Positivo</option>
+              <option value="negative">Negativo</option>
+            </select>
+          }
+        </div>
+      </div>
+      <div class="vcheck">
+        <div class="sero-row" formGroupName="vhc">
+          <label class="sero-check">
+            <input type="checkbox" formControlName="checked" />
+            <span>Hepatitis C (VHC)</span>
+          </label>
+          @if (sourceFormGroup().get('serology.vhc.checked')?.value) {
+            <select formControlName="result">
+              <option value="positive">Positivo</option>
+              <option value="negative">Negativo</option>
+            </select>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="field">
+    <label for="observations">Observaciones de la fuente</label>
+    <textarea
+      id="observations"
+      rows="2"
+      placeholder="Observaciones adicionales sobre la fuente..."
+      formControlName="observations"
+    ></textarea>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import type { Accident } from '../models/accident.model';
-import { MOCK_ACCIDENTS, getAccidentById, getIncompleteAccidents, getAccidentsInFollowUp } from '../mock/mock-data';
+import { MOCK_ACCIDENTS, getAccidentById, getIncompleteAccidents } from '../mock/mock-data';
 
 @Injectable({ providedIn: 'root' })
 export class AccidentService {
@@ -17,7 +17,8 @@ export class AccidentService {
     return of(getIncompleteAccidents());
   }
 
-  getInFollowUp(): Observable<Accident[]> {
-    return of(getAccidentsInFollowUp());
+  saveAccident(accidentData: Accident): Observable<Accident | null> {
+    console.log(accidentData)
+    return of(null)
   }
 }

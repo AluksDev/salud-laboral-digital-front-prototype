@@ -15,19 +15,24 @@ export const MOCK_WORKERS: Worker[] = [
 ];
 
 export const MOCK_SOURCES: Source[] = [
-  { id: 's1', anNumber: 'AN 88213', serology: { vih: 'negative', vhb: 'positive', vhc: 'negative' } },
-  { id: 's2', anNumber: 'AN 71045', serology: { vih: 'negative', vhb: 'negative', vhc: 'positive' } },
-  { id: 's3', anNumber: 'AN 55123', serology: { vih: 'positive', vhb: 'negative', vhc: 'negative' } },
-  { id: 's4', anNumber: 'AN 33478', serology: { vih: 'negative', vhb: 'positive', vhc: 'pending' } },
+  { id: 's1', type: 'known', anNumber: 'AN 88213', serology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, observations: 'Paciente colaborador', consent: 'written' },
+  { id: 's2', type: 'known', anNumber: 'AN 71045', serology: { vih: 'negative', vhb: 'negative', vhc: 'positive' }, observations: '', consent: 'verbal' },
+  { id: 's3', type: 'known', anNumber: 'AN 55123', serology: { vih: 'positive', vhb: 'negative', vhc: 'negative' }, observations: 'Paciente en seguimiento por VIH', consent: 'written' },
+  { id: 's4', type: 'known', anNumber: 'AN 33478', serology: { vih: 'negative', vhb: 'positive', vhc: 'pending' }, observations: '', consent: 'none' },
+  { id: 's5', type: 'known', anNumber: 'AN 99012', serology: { vih: 'negative', vhb: 'negative', vhc: 'negative' }, observations: 'Paciente sin factores de riesgo', consent: 'written' },
+  { id: 's6', type: 'unknown', anNumber: '', serology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, observations: 'Fuente no identificada', consent: 'none' },
+  { id: 's7', type: 'unknown', anNumber: '', serology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, observations: 'Paciente no identificado en intubación', consent: 'none' },
+  { id: 's8', type: 'unknown', anNumber: '', serology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, observations: 'Salpicadura en piel no intacta, fuente no identificada', consent: 'none' },
 ];
 
 export const MOCK_ACCIDENTS: Accident[] = [
-  { id: 'a1', workerId: 'w1', accidentDate: '2026-06-25', sourceId: 's1', observations: 'Pinchazo con aguja tras extracción sanguínea. Fuente conocida.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'incomplete', createdAt: '2026-06-25T10:30:00Z' },
-  { id: 'a2', workerId: 'w2', accidentDate: '2026-06-20', sourceId: null, observations: 'Salpicadura de sangre en mucosa ocular durante intubación. Fuente desconocida.', workerSerology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-20T14:15:00Z' },
-  { id: 'a3', workerId: 'w3', accidentDate: '2026-06-15', sourceId: 's2', observations: 'Corte con bisturí contaminado en quirófano.', workerSerology: { vih: 'negative', vhb: 'negative', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-15T09:45:00Z' },
-  { id: 'a4', workerId: 'w4', accidentDate: '2026-04-15', sourceId: 's3', observations: 'Pinchazo con aguja en box de urgencias.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'in_follow_up', createdAt: '2026-04-15T16:20:00Z' },
-  { id: 'a5', workerId: 'w5', accidentDate: '2026-03-01', sourceId: null, observations: 'Salpicadura en piel no intacta. Fuente desconocida.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'in_follow_up', createdAt: '2026-03-01T11:00:00Z' },
-  { id: 'a6', workerId: 'w6', accidentDate: '2026-01-10', sourceId: 's4', observations: 'Pinchazo con aguja al procesar muestra en laboratorio.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'closed', createdAt: '2026-01-10T08:30:00Z' },
+  { id: 'a1', workerId: 'w1', accidentDate: '2026-06-25', sourceIds: ['s1'], workerConsent: true, observations: 'Pinchazo con aguja tras extracción sanguínea. Fuente conocida.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'complete', createdAt: '2026-06-25T10:30:00Z' },
+  { id: 'a2', workerId: 'w2', accidentDate: '2026-06-20', sourceIds: ['s7'], workerConsent: true, observations: 'Salpicadura de sangre en mucosa ocular durante intubación. Fuente desconocida.', workerSerology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-20T14:15:00Z' },
+  { id: 'a3', workerId: 'w3', accidentDate: '2026-06-15', sourceIds: ['s2'], workerConsent: false, observations: 'Corte con bisturí contaminado en quirófano.', workerSerology: { vih: 'negative', vhb: 'negative', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-15T09:45:00Z' },
+  { id: 'a4', workerId: 'w4', accidentDate: '2026-04-15', sourceIds: ['s3'], workerConsent: true, observations: 'Pinchazo con aguja en box de urgencias.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'complete', createdAt: '2026-04-15T16:20:00Z' },
+  { id: 'a5', workerId: 'w5', accidentDate: '2026-03-01', sourceIds: ['s8'], workerConsent: true, observations: 'Salpicadura en piel no intacta. Fuente desconocida.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'incomplete', createdAt: '2026-03-01T11:00:00Z' },
+  { id: 'a6', workerId: 'w6', accidentDate: '2026-01-10', sourceIds: ['s4'], workerConsent: true, observations: 'Pinchazo con aguja al procesar muestra en laboratorio.', workerSerology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, status: 'closed', createdAt: '2026-01-10T08:30:00Z' },
+  { id: 'a7', workerId: 'w7', accidentDate: '2026-06-28', sourceIds: ['s5', 's6'], workerConsent: true, observations: 'Doble exposición: pinchazo con aguja y salpicadura mucosa. Una fuente conocida y otra desconocida.', workerSerology: { vih: 'negative', vhb: 'negative', vhc: 'pending' }, status: 'incomplete', createdAt: '2026-06-28T13:45:00Z' },
 ];
 
 export const MOCK_AGENDA: AgendaItem[] = [
@@ -51,10 +56,6 @@ export function getIncompleteAccidents(): Accident[] {
   return MOCK_ACCIDENTS.filter(a => a.status === 'incomplete');
 }
 
-export function getAccidentsInFollowUp(): Accident[] {
-  return MOCK_ACCIDENTS.filter(a => a.status === 'in_follow_up');
-}
-
 export function buildWorkerDisplayName(worker: Worker): string {
   return `${worker.lastName}, ${worker.name}`;
 }
@@ -63,12 +64,9 @@ export function buildWorkerShortName(worker: Worker): string {
   return `${worker.lastName}, ${worker.name.charAt(0)}.`;
 }
 
-export function buildEpisodeDescription(accident: Accident, worker: Worker, source?: Source): string {
-  if (accident.sourceId && source) {
-    const pendingTests: string[] = [];
-    if (source.serology.vih === 'pending') pendingTests.push('serológicos fuente');
-    else if (source.serology.vhb === 'pending') pendingTests.push('serológicos fuente');
-    else if (source.serology.vhc === 'pending') pendingTests.push('serológicos fuente');
+export function buildEpisodeDescription(accident: Accident, worker: Worker, sources: Source[] = []): string {
+  if (accident.sourceIds.length && sources.length) {
+    const source = sources[0];
 
     if (source.serology.vih === 'pending' || source.serology.vhb === 'pending' || source.serology.vhc === 'pending') {
       return `Fuente ${source.anNumber} — faltan resultados serológicos`;
@@ -81,4 +79,32 @@ export function buildEpisodeDescription(accident: Accident, worker: Worker, sour
   }
 
   return 'Pendiente de revisión';
+}
+
+export function getWorkerByDni(dni: string) {
+  return MOCK_WORKERS.find(w => w.dni === dni);
+}
+
+export function createWorker(worker: any): Worker {
+  const lastId = MOCK_WORKERS[MOCK_WORKERS.length - 1].id.split('w')[1];
+  const newId = `w${Number(lastId) + 1}`;
+  const newWorker = {
+    ...worker,
+    id: newId
+  }
+  MOCK_WORKERS.push(newWorker);
+  return newWorker;
+}
+
+export function addSource(source: Omit<Source, 'id'>): Source {
+  const lastId = MOCK_SOURCES[MOCK_SOURCES.length - 1].id.split('s')[1];
+  const newId = `s${Number(lastId) + 1}`;
+  const newSource = {
+    ...source,
+    id: newId
+  }
+  MOCK_SOURCES.push(newSource);
+  console.log(newId)
+  console.log(newSource)
+  return newSource;
 }
