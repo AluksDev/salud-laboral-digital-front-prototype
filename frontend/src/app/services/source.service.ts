@@ -9,7 +9,7 @@ export class SourceService {
     return of(MOCK_SOURCES);
   }
 
-  getById(id: string): Observable<Source | undefined> {
+  getById(id: string): Observable<Source> {
     return of(getSourceById(id));
   }
 

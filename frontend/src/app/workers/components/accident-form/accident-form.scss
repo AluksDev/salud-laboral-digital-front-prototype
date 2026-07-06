@@ -47,70 +47,21 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-
-  label {
-    font-size: 12px;
-    color: $color-text-secondary;
-  }
-
-  input,
-  select {
-    width: 100%;
-  }
 }
 
 .checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin-top: 16px;
-
-  input {
-    width: 16px;
-    height: 16px;
-    accent-color: $color-primary;
-    cursor: pointer;
-  }
-
-  label {
-    font-size: 13px;
-    color: $color-text;
-    cursor: pointer;
-  }
 }
 
 .consent-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
   padding: 10px 0;
-}
-
-.consent-label {
-  font-size: 13px;
-  color: $color-text;
-  font-weight: 500;
-}
-
-.radio-row {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.radio-option {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  cursor: pointer;
-
-  input {
-    width: auto;
-    height: auto;
-    accent-color: $color-primary;
-    margin: 0;
-  }
+.full-width {
+  width: 100%;
 }
 
 .vcheck {
@@ -124,71 +75,42 @@
 .sero-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
 
-  select {
-    height: 28px;
-    font-size: 12px;
-    padding: 0 6px;
-    width: auto;
-    min-width: 100px;
-  }
-}
-
-.sero-check {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  flex: 1;
-
-  input {
-    width: 16px;
-    height: 16px;
-    accent-color: $color-primary;
-    margin: 0;
-  }
-
-  span {
+  label {
     font-size: 13px;
   }
 }
 
-.btn-add-source {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 4px;
-  margin-bottom: 8px;
-  border: 1px dashed $color-border;
-  border-radius: $border-radius-md;
-  background: transparent;
-  color: $color-primary;
-  font-size: 13px;
-  cursor: pointer;
+.sero-field {
+  --mat-form-field-container-height: 32px;
+  width: 140px;
 
-  &:hover {
-    background: $color-primary-bg;
-    border-color: $color-primary-light;
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    padding: 0 8px;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    min-height: 32px;
   }
 }
 
-.btn-remove-source {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 16px;
-  border: 0.5px solid #e74c3c;
-  border-radius: $border-radius-md;
-  background: transparent;
-  color: #e74c3c;
+.field-error {
   font-size: 12px;
-  cursor: pointer;
+  color: var(--mat-sys-error);
+}
 
-  &:hover {
-    background: #fdf0ef;
-  }
+.btn-add-source {
+  border-style: dashed !important;
+  margin-top: 4px;
+  margin-bottom: 8px;
 }
 
 .file-upload {
@@ -260,29 +182,6 @@
   margin-top: 28px;
   padding-top: 18px;
   border-top: 0.5px solid $color-border;
-}
-
-.btn-cancel {
-  background: $color-surface;
-  border: 0.5px solid $color-border;
-
-  &:hover {
-    background: $color-surface-1;
-  }
-}
-
-.btn-primary {
-  background: $color-primary;
-  color: $color-surface;
-  border: none;
-  height: 42px;
-  padding: 0 20px;
-  font-size: 14px;
-  font-weight: 500;
-
-  &:hover {
-    background: #2d7836;
-  }
 }
 
 .check-icon {

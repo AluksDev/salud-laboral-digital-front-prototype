@@ -9,44 +9,80 @@
     </div>
     <div class="field-grid">
       <div class="field">
-        <label for="fecha">Fecha del accidente</label>
-        <input id="fecha" type="date" formControlName="accidentDate">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha del accidente</mat-label>
+          <input matInput [matDatepicker]="accidentDatePicker" formControlName="accidentDate" (blur)="updateErrorMessage('accidentDate')">
+          <mat-datepicker-toggle matIconSuffix [for]="accidentDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #accidentDatePicker></mat-datepicker>
+          @if (accidentForm.get('accidentDate')?.invalid) {
+            <mat-error>{{errorMessages()['accidentDate']}}</mat-error>
+          }
+        </mat-form-field>
       </div>
       <div class="field">
-        <label for="dni">DNI</label>
-        <input id="dni" type="text" placeholder="00000000X" formControlName="dni">
+        <mat-form-field appearance="outline">
+          <mat-label>DNI</mat-label>
+          <input matInput placeholder="00000000X" [formControl]="accidentForm.controls.dni" (blur)="updateErrorMessage('dni')" required />
+          @if (accidentForm.controls.dni.invalid) {
+            <mat-error>{{errorMessages()['dni']}}</mat-error>
+          }
+        </mat-form-field>
       </div>
       <div class="field">
-        <label for="telefono">Tel&eacute;fono</label>
-        <input id="telefono" type="text" placeholder="600 000 000" formControlName="phone">
+        <mat-form-field appearance="outline">
+          <mat-label>Tel&eacute;fono</mat-label>
+          <input matInput placeholder="600 000 000" formControlName="phone" (blur)="updateErrorMessage('phone')">
+          @if (accidentForm.get('phone')?.invalid) {
+            <mat-error>{{errorMessages()['phone']}}</mat-error>
+          }
+        </mat-form-field>
       </div>
       <div class="field">
-        <label for="nombre">Nombre</label>
-        <input id="nombre" type="text" placeholder="Nombre" formControlName="name">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="Nombre" formControlName="name" (blur)="updateErrorMessage('name')">
+          @if (accidentForm.get('name')?.invalid) {
+            <mat-error>{{errorMessages()['name']}}</mat-error>
+          }
+        </mat-form-field>
       </div>
       <div class="field">
-        <label for="apellidos">Apellidos</label>
-        <input id="apellidos" type="text" placeholder="Apellidos" formControlName="lastName">
+        <mat-form-field appearance="outline">
+          <mat-label>Apellidos</mat-label>
+          <input matInput placeholder="Apellidos" formControlName="lastName" (blur)="updateErrorMessage('lastName')">
+          @if (accidentForm.get('lastName')?.invalid) {
+            <mat-error>{{errorMessages()['lastName']}}</mat-error>
+          }
+        </mat-form-field>
       </div>
       <div class="field">
-        <label for="categoria">Categor&iacute;a profesional</label>
-        <select id="categoria" formControlName="category">
-          <option>Enfermero/a</option>
-          <option>Auxiliar de enfermer&iacute;a</option>
-          <option>M&eacute;dico/a</option>
-          <option>T&eacute;cnico de laboratorio</option>
-          <option>Otra</option>
-        </select>
+        <mat-form-field appearance="outline">
+          <mat-label>Categor&iacute;a profesional</mat-label>
+          <mat-select formControlName="category" (blur)="updateErrorMessage('category')">
+            <mat-option value="Enfermero/a">Enfermero/a</mat-option>
+            <mat-option value="Auxiliar de enfermería">Auxiliar de enfermer&iacute;a</mat-option>
+            <mat-option value="Médico/a">M&eacute;dico/a</mat-option>
+            <mat-option value="Técnico de laboratorio">T&eacute;cnico de laboratorio</mat-option>
+            <mat-option value="Otra">Otra</mat-option>
+          </mat-select>
+          @if (accidentForm.get('category')?.invalid) {
+            <mat-error>{{errorMessages()['category']}}</mat-error>
+          }
+        </mat-form-field>
       </div>
-      <div class="field" style="grid-column: span 1;">
-        <label for="servicio">Servicio / Unidad</label>
-        <input id="servicio" type="text" placeholder="Ej. Urgencias" formControlName="serviceUnit">
+      <div class="field">
+        <mat-form-field appearance="outline">
+          <mat-label>Servicio / Unidad</mat-label>
+          <input matInput placeholder="Ej. Urgencias" formControlName="serviceUnit" (blur)="updateErrorMessage('serviceUnit')">
+          @if (accidentForm.get('serviceUnit')?.invalid) {
+            <mat-error>{{errorMessages()['serviceUnit']}}</mat-error>
+          }
+        </mat-form-field>
       </div>
     </div>
 
     <div class="checkbox-row">
-      <input type="checkbox" id="inmune-hb" formControlName="isImmuneVhb">
-      <label for="inmune-hb">Trabajador inmune frente a Hepatitis B (VHB)</label>
+      <mat-checkbox formControlName="isImmuneVhb">Trabajador inmune frente a Hepatitis B (VHB)</mat-checkbox>
     </div>
 
     <div class="form-section-title">
@@ -54,24 +90,22 @@
       Consentimientos
     </div>
     <div class="consent-group">
-      <span class="consent-label">Consentimiento del trabajador por escrito</span>
-      <div class="radio-row">
-        <label class="radio-option">
-          <input type="radio" formControlName="workerConsent" value="yes">
-          <span>S&iacute;</span>
-        </label>
-        <label class="radio-option">
-          <input type="radio" formControlName="workerConsent" value="no">
-          <span>No</span>
-        </label>
-      </div>
+      <mat-checkbox formControlName="workerConsent" (blur)="updateErrorMessage('workerConsent')">
+        Consentimiento del trabajador por escrito
+      </mat-checkbox>
+      @if (accidentForm.get('workerConsent')?.invalid) {
+        <span class="field-error">Debe aceptar el consentimiento por escrito</span>
+      }
     </div>
 
     <div class="form-section-title">
       <span class="section-icon">&#128221;</span>
       Observaciones
     </div>
-    <textarea rows="3" placeholder="Observaciones adicionales..." formControlName="observations"></textarea>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Observaciones adicionales...</mat-label>
+      <textarea matInput rows="3" formControlName="observations"></textarea>
+    </mat-form-field>
 
     <div class="form-section-title">
       <span class="section-icon">&#129440;</span>
@@ -79,45 +113,39 @@
     </div>
     <div formGroupName="workerSerology">
       <div class="vcheck">
-        <div class="sero-row" formGroupName="vih">
-          <label class="sero-check">
-            <input type="checkbox" formControlName="checked" />
-            <span>VIH</span>
-          </label>
-          @if (accidentForm.get('workerSerology.vih.checked')?.value) {
-            <select formControlName="result">
-              <option value="positive">Positivo</option>
-              <option value="negative">Negativo</option>
-            </select>
-          }
+        <div class="sero-row">
+          <label>VIH</label>
+          <mat-form-field appearance="outline" class="sero-field">
+            <mat-select formControlName="vih">
+              <mat-option value="pending">Pendiente</mat-option>
+              <mat-option value="positive">Positivo</mat-option>
+              <mat-option value="negative">Negativo</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
       <div class="vcheck">
-        <div class="sero-row" formGroupName="vhb">
-          <label class="sero-check">
-            <input type="checkbox" formControlName="checked" />
-            <span>Hepatitis B (VHB)</span>
-          </label>
-          @if (accidentForm.get('workerSerology.vhb.checked')?.value) {
-            <select formControlName="result">
-              <option value="positive">Positivo</option>
-              <option value="negative">Negativo</option>
-            </select>
-          }
+        <div class="sero-row">
+          <label>Hepatitis B (VHB)</label>
+          <mat-form-field appearance="outline" class="sero-field">
+            <mat-select formControlName="vhb">
+              <mat-option value="pending">Pendiente</mat-option>
+              <mat-option value="positive">Positivo</mat-option>
+              <mat-option value="negative">Negativo</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
       <div class="vcheck">
-        <div class="sero-row" formGroupName="vhc">
-          <label class="sero-check">
-            <input type="checkbox" formControlName="checked" />
-            <span>Hepatitis C (VHC)</span>
-          </label>
-          @if (accidentForm.get('workerSerology.vhc.checked')?.value) {
-            <select formControlName="result">
-              <option value="positive">Positivo</option>
-              <option value="negative">Negativo</option>
-            </select>
-          }
+        <div class="sero-row">
+          <label>Hepatitis C (VHC)</label>
+          <mat-form-field appearance="outline" class="sero-field">
+            <mat-select formControlName="vhc">
+              <mat-option value="pending">Pendiente</mat-option>
+              <mat-option value="positive">Positivo</mat-option>
+              <mat-option value="negative">Negativo</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
     </div>
@@ -131,7 +159,7 @@
       @for (sourceGroup of sourceGroups; track sourceGroup; let i = $index) {
         <app-source-form [sourceFormGroup]="sourceGroup" [sourceIndex]="i" />
         @if (sources.length > 1) {
-          <button type="button" class="btn-remove-source" (click)="removeSource(i)">
+          <button mat-button type="button" color="warn" class="full-width" (click)="removeSource(i)">
             Eliminar fuente {{ i + 1 }}
           </button>
         }
@@ -139,7 +167,7 @@
     </div>
 
     @if (sources.length < 2) {
-      <button type="button" class="btn-add-source" (click)="addSource()">
+      <button mat-stroked-button type="button" color="primary" class="full-width btn-add-source" (click)="addSource()">
         + A&ntilde;adir otra fuente
       </button>
     }
@@ -173,8 +201,8 @@
   </div>
 
   <div class="form-footer">
-    <button class="btn-cancel" (click)="closeForm()">Cancelar</button>
-    <button class="btn-primary" (click)="saveForm()">
+    <button mat-button (click)="closeForm()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="saveForm()">
       <span class="check-icon">&#10003;</span>
       Guardar accidente
     </button>

@@ -4,97 +4,81 @@
     <span class="source-title">Fuente {{ sourceIndex() + 1 }}</span>
   </div>
 
-  <div class="source-type-group">
-    <label class="source-radio">
-      <input type="radio" formControlName="type" value="unknown" />
-      <span>Fuente desconocida</span>
-    </label>
-    <label class="source-radio">
-      <input type="radio" formControlName="type" value="known" />
-      <span>Fuente conocida</span>
-    </label>
-  </div>
+  <mat-radio-group formControlName="type" class="source-type-group">
+    <mat-radio-button value="unknown">Fuente desconocida</mat-radio-button>
+    <mat-radio-button value="known">Fuente conocida</mat-radio-button>
+  </mat-radio-group>
 
   @if (sourceFormGroup().get('type')?.value === 'known') {
     <div class="field">
-      <label for="anNumber">AN (N.º de Historia)</label>
-      <input
-        id="anNumber"
-        type="text"
-        placeholder="000000"
-        formControlName="anNumber"
-      />
+      <mat-form-field appearance="outline">
+        <mat-label>AN (N.&ordm; de Historia)</mat-label>
+        <input matInput placeholder="000000" formControlName="anNumber" />
+      </mat-form-field>
     </div>
 
     <div class="field">
-      <label for="consent">Consentimiento de la fuente</label>
-      <select id="consent" formControlName="consent">
-        <option value="none">No</option>
-        <option value="verbal">Verbal</option>
-        <option value="written">Por escrito</option>
-      </select>
+      <mat-form-field appearance="outline">
+        <mat-label>Consentimiento de la fuente</mat-label>
+        <mat-select formControlName="consent">
+          <mat-option value="none">No</mat-option>
+          <mat-option value="verbal">Verbal</mat-option>
+          <mat-option value="written">Por escrito</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   }
 
   @if (sourceFormGroup().get('type')?.value === 'known') {
     <div class="form-section-title">
       <span class="section-icon">&#129440;</span>
-      Serologías fuente {{ sourceIndex() + 1 }}
+      Serolog&iacute;as fuente {{ sourceIndex() + 1 }}
     </div>
 
     <div formGroupName="serology">
       <div class="vcheck">
-        <div class="sero-row" formGroupName="vih">
-          <label class="sero-check">
-            <input type="checkbox" formControlName="checked" />
-            <span>VIH</span>
-          </label>
-          @if (sourceFormGroup().get('serology.vih.checked')?.value) {
-            <select formControlName="result">
-              <option value="positive">Positivo</option>
-              <option value="negative">Negativo</option>
-            </select>
-          }
+        <div class="sero-row">
+          <label>VIH</label>
+          <mat-form-field appearance="fill" class="sero-field">
+            <mat-select formControlName="vih">
+              <mat-option value="pending">Pendiente</mat-option>
+              <mat-option value="positive">Positivo</mat-option>
+              <mat-option value="negative">Negativo</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
       <div class="vcheck">
-        <div class="sero-row" formGroupName="vhb">
-          <label class="sero-check">
-            <input type="checkbox" formControlName="checked" />
-            <span>Hepatitis B (VHB)</span>
-          </label>
-          @if (sourceFormGroup().get('serology.vhb.checked')?.value) {
-            <select formControlName="result">
-              <option value="positive">Positivo</option>
-              <option value="negative">Negativo</option>
-            </select>
-          }
+        <div class="sero-row">
+          <label>Hepatitis B (VHB)</label>
+          <mat-form-field appearance="fill" class="sero-field">
+            <mat-select formControlName="vhb">
+              <mat-option value="pending">Pendiente</mat-option>
+              <mat-option value="positive">Positivo</mat-option>
+              <mat-option value="negative">Negativo</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
       <div class="vcheck">
-        <div class="sero-row" formGroupName="vhc">
-          <label class="sero-check">
-            <input type="checkbox" formControlName="checked" />
-            <span>Hepatitis C (VHC)</span>
-          </label>
-          @if (sourceFormGroup().get('serology.vhc.checked')?.value) {
-            <select formControlName="result">
-              <option value="positive">Positivo</option>
-              <option value="negative">Negativo</option>
-            </select>
-          }
+        <div class="sero-row">
+          <label>Hepatitis C (VHC)</label>
+          <mat-form-field appearance="fill" class="sero-field">
+            <mat-select formControlName="vhc">
+              <mat-option value="pending">Pendiente</mat-option>
+              <mat-option value="positive">Positivo</mat-option>
+              <mat-option value="negative">Negativo</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
     </div>
   }
 
   <div class="field">
-    <label for="observations">Observaciones de la fuente</label>
-    <textarea
-      id="observations"
-      rows="2"
-      placeholder="Observaciones adicionales sobre la fuente..."
-      formControlName="observations"
-    ></textarea>
+    <mat-form-field appearance="outline">
+      <mat-label>Observaciones de la fuente</mat-label>
+      <textarea matInput rows="2" placeholder="Observaciones adicionales sobre la fuente..." formControlName="observations"></textarea>
+    </mat-form-field>
   </div>
 </div>
