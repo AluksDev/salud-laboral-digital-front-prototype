@@ -1,0 +1,38 @@
+@use '../../../styles/variables' as *;
+
+.alert-overlay {
+  text-align: center;
+  padding: 32px 24px 24px;
+}
+
+.alert-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.alert-text {
+  font-size: $font-size-xl;
+  color: $color-danger;
+  line-height: 1.5;
+  margin: 0 0 24px;
+
+  strong {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  animation: blink-bg 0.8s ease-in-out infinite alternate;
+  border: 3px solid $color-danger;
+}
+
+@keyframes blink-bg {
+  0% {
+    background: $color-danger-bg;
+  }
+  100% {
+    background: #fff0f0;
+  }
+}

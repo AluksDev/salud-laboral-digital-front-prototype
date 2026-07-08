@@ -157,7 +157,7 @@
 
     <div formArrayName="sources">
       @for (sourceGroup of sourceGroups; track sourceGroup; let i = $index) {
-        <app-source-form [sourceFormGroup]="sourceGroup" [sourceIndex]="i" />
+        <app-source-form [sourceFormGroup]="sourceGroup" [sourceIndex]="i" [isImmuneVhb]="accidentForm.get('isImmuneVhb')?.value ?? false" />
         @if (sources.length > 1) {
           <button mat-button type="button" color="warn" class="full-width" (click)="removeSource(i)">
             Eliminar fuente {{ i + 1 }}

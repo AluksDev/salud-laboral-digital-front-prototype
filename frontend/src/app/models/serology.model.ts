@@ -5,3 +5,11 @@ export interface SerologyResult {
   vhb: SerologyStatus;
   vhc: SerologyStatus;
 }
+
+export interface SourceSerology extends SerologyResult {
+  arn: 'pending' | 'positive' | 'negative';
+  cargaViral: 'pending' | 'positive' | 'negative';
+  observacionesVih: string;
+  vhbCore: 'pending' | 'positive' | 'negative';
+  vhbSuperficie: 'pending' | 'positive' | 'negative';
+}

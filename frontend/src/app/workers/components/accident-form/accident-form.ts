@@ -81,8 +81,12 @@ export class AccidentForm {
       observations: [''],
       serology: this.fb.nonNullable.group({
         vih: 'pending' as SerologyStatus,
-        vhb: 'pending' as SerologyStatus,
         vhc: 'pending' as SerologyStatus,
+        arn: 'pending' as SerologyStatus,
+        cargaViral: 'pending' as SerologyStatus,
+        observacionesVih: [''],
+        vhbCore: 'pending' as SerologyStatus,
+        vhbSuperficie: 'pending' as SerologyStatus,
       }),
     });
   }

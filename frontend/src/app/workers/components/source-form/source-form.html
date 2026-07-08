@@ -36,41 +36,134 @@
     </div>
 
     <div formGroupName="serology">
-      <div class="vcheck">
+      <!-- VIH -->
+      <div class="vcheck" [class.has-alert]="showVihAlert()">
         <div class="sero-row">
           <label>VIH</label>
           <mat-form-field appearance="fill" class="sero-field">
-            <mat-select formControlName="vih">
+            <mat-select (selectionChange)="valueChange($event)" formControlName="vih">
               <mat-option value="pending">Pendiente</mat-option>
               <mat-option value="positive">Positivo</mat-option>
               <mat-option value="negative">Negativo</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
+
+        @if (showVihSubFields()) {
+          <div class="sub-fields">
+            <div class="sero-row">
+              <label>Carga Viral</label>
+              <mat-form-field appearance="fill" class="sero-field">
+                <mat-select (selectionChange)="valueChange($event)" formControlName="cargaViral">
+                  <mat-option value="pending">Pendiente</mat-option>
+                  <mat-option value="positive">Positivo</mat-option>
+                  <mat-option value="negative">Negativo</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="sero-row">
+              <label>Observaciones VIH</label>
+              <mat-form-field appearance="fill" class="sero-field">
+                <input matInput formControlName="observacionesVih" placeholder="Observaciones..." />
+              </mat-form-field>
+            </div>
+
+            @if (showVihAlert()) {
+              <div class="vih-alert">
+                <span class="vih-alert-icon">&#128680;</span>
+                <span>Se recomienda derivar a Infecciosos de forma urgente para quimioprofilaxis (PPE).</span>
+                <button mat-stroked-button color="warn" type="button" class="alert-btn" (click)="openCriticalAlert()">
+                  Ver alerta completa
+                </button>
+              </div>
+            }
+
+            <div class="seg-badge seg-mandatory">
+              Seguimiento Obligatorio
+            </div>
+          </div>
+        }
       </div>
-      <div class="vcheck">
-        <div class="sero-row">
-          <label>Hepatitis B (VHB)</label>
-          <mat-form-field appearance="fill" class="sero-field">
-            <mat-select formControlName="vhb">
-              <mat-option value="pending">Pendiente</mat-option>
-              <mat-option value="positive">Positivo</mat-option>
-              <mat-option value="negative">Negativo</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
+
+      <!-- VHC -->
       <div class="vcheck">
         <div class="sero-row">
           <label>Hepatitis C (VHC)</label>
           <mat-form-field appearance="fill" class="sero-field">
-            <mat-select formControlName="vhc">
+            <mat-select (selectionChange)="valueChange($event)" formControlName="vhc">
               <mat-option value="pending">Pendiente</mat-option>
               <mat-option value="positive">Positivo</mat-option>
               <mat-option value="negative">Negativo</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
+
+        @if (showArn()) {
+          <div class="sub-fields">
+            <div class="sero-row">
+              <label>ARN</label>
+              <mat-form-field appearance="fill" class="sero-field">
+                <mat-select formControlName="arn">
+                  <mat-option value="pending">Pendiente</mat-option>
+                  <mat-option value="positive">Positivo</mat-option>
+                  <mat-option value="negative">Negativo</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            @if (sourceFormGroup().get('serology.arn')?.value === 'positive') {
+              <div class="seg-badge seg-mandatory">
+                Seguimiento Obligatorio
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- VHB Core -->
+      <div class="vcheck">
+        <div class="sero-row">
+          <label>Hepatitis B (VHB) - Core</label>
+          <mat-form-field appearance="fill" class="sero-field">
+            <mat-select (selectionChange)="valueChange($event)" formControlName="vhbCore">
+              <mat-option value="pending">Pendiente</mat-option>
+              <mat-option value="positive">Positivo</mat-option>
+              <mat-option value="negative">Negativo</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        @if (showSuperficie()) {
+          <div class="sub-fields">
+            <div class="sero-row">
+              <label>Superficie</label>
+              <mat-form-field appearance="fill" class="sero-field">
+                <mat-select formControlName="vhbSuperficie">
+                  <mat-option value="pending">Pendiente</mat-option>
+                  <mat-option value="positive">Positivo</mat-option>
+                  <mat-option value="negative">Negativo</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            @if (sourceFormGroup().get('serology.vhbSuperficie')?.value === 'positive') {
+              @if (isImmuneVhb()) {
+                <div class="seg-badge seg-closed">
+                  VHB cerrado (trabajador inmune)
+                </div>
+              } @else {
+                <div class="vhb-alert-banner">
+                  <span>&#9888;&#65039;</span>
+                  <span>Poner Vacuna e Inmunoglobulina</span>
+                </div>
+                <div class="seg-badge seg-mandatory">
+                  Seguimiento Obligatorio
+                </div>
+              }
+            }
+          </div>
+        }
       </div>
     </div>
   }

@@ -55,6 +55,11 @@
   border-radius: $border-radius-md;
   margin-bottom: 8px;
   background: $color-surface;
+
+  &.has-alert {
+    border-color: $color-danger;
+    border-width: 1px;
+  }
 }
 
 .sero-row {
@@ -85,4 +90,82 @@
     padding-bottom: 6px;
     min-height: 32px;
   }
+}
+
+.sub-fields {
+  margin-top: 8px;
+  margin-left: 16px;
+  padding: 8px 10px;
+  border-left: 2px solid $color-primary-light;
+  border-radius: 0 $border-radius-sm $border-radius-sm 0;
+  background: rgba($color-primary-light, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .sero-row label {
+    font-size: 12px;
+    color: $color-text-secondary;
+  }
+}
+
+.seg-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.seg-mandatory {
+  background: $color-danger-bg;
+  color: $color-danger;
+  border: 0.5px solid $color-danger;
+}
+
+.seg-closed {
+  background: $color-primary-bg;
+  color: $color-primary;
+  border: 0.5px solid $color-primary-light;
+}
+
+.vih-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: $color-warning;
+  color: #fff;
+  border-radius: $border-radius-sm;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.vih-alert-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.alert-btn {
+  --mdc-text-button-label-text-size: 11px;
+  --mdc-text-button-label-text-color: #fff;
+  --mat-text-button-state-layer-color: rgba(255, 255, 255, 0.12);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.vhb-alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: $color-danger-bg;
+  color: $color-danger;
+  border: 0.5px solid $color-danger;
+  border-radius: $border-radius-sm;
+  font-size: 13px;
+  font-weight: 500;
 }

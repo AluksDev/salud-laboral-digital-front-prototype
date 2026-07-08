@@ -2,6 +2,7 @@ import type { Worker } from '../models/worker.model';
 import type { Source } from '../models/source.model';
 import type { Accident, AccidentStatus, CreateAccidentDto } from '../models/accident.model';
 import type { AgendaItem } from '../models/agenda-item.model';
+import type { SerologyStatus, SourceSerology } from '../models/serology.model';
 import { AccidentFormData } from '../services/accident.service';
 
 export const MOCK_WORKERS: Worker[] = [
@@ -15,15 +16,27 @@ export const MOCK_WORKERS: Worker[] = [
   { id: 'w8', dni: '89012345H', name: 'David', lastName: 'Romero Gil', phone: '+34 685 001 223', category: 'Médico/a', serviceUnit: 'Urgencias', isImmuneVhb: false },
 ];
 
+function makeSero(vih: SerologyStatus, vhbCore: SerologyStatus, vhc: SerologyStatus, overrides: Partial<SourceSerology> = {}): SourceSerology {
+  return {
+    vih, vhb: 'pending', vhc,
+    arn: 'pending',
+    cargaViral: 'pending',
+    observacionesVih: '',
+    vhbCore,
+    vhbSuperficie: 'pending',
+    ...overrides,
+  };
+}
+
 export const MOCK_SOURCES: Source[] = [
-  { id: 's1', type: 'known', anNumber: 'AN 88213', serology: { vih: 'negative', vhb: 'positive', vhc: 'negative' }, observations: 'Paciente colaborador', consent: 'written' },
-  { id: 's2', type: 'known', anNumber: 'AN 71045', serology: { vih: 'negative', vhb: 'negative', vhc: 'positive' }, observations: '', consent: 'verbal' },
-  { id: 's3', type: 'known', anNumber: 'AN 55123', serology: { vih: 'positive', vhb: 'negative', vhc: 'negative' }, observations: 'Paciente en seguimiento por VIH', consent: 'written' },
-  { id: 's4', type: 'known', anNumber: 'AN 33478', serology: { vih: 'negative', vhb: 'positive', vhc: 'pending' }, observations: '', consent: 'none' },
-  { id: 's5', type: 'known', anNumber: 'AN 99012', serology: { vih: 'negative', vhb: 'negative', vhc: 'negative' }, observations: 'Paciente sin factores de riesgo', consent: 'written' },
-  { id: 's6', type: 'unknown', anNumber: '', serology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, observations: 'Fuente no identificada', consent: 'none' },
-  { id: 's7', type: 'unknown', anNumber: '', serology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, observations: 'Paciente no identificado en intubación', consent: 'none' },
-  { id: 's8', type: 'unknown', anNumber: '', serology: { vih: 'pending', vhb: 'pending', vhc: 'pending' }, observations: 'Salpicadura en piel no intacta, fuente no identificada', consent: 'none' },
+  { id: 's1', type: 'known', anNumber: 'AN 88213', serology: makeSero('negative', 'positive', 'negative'), observations: 'Paciente colaborador', consent: 'written' },
+  { id: 's2', type: 'known', anNumber: 'AN 71045', serology: makeSero('negative', 'negative', 'positive'), observations: '', consent: 'verbal' },
+  { id: 's3', type: 'known', anNumber: 'AN 55123', serology: makeSero('positive', 'negative', 'negative'), observations: 'Paciente en seguimiento por VIH', consent: 'written' },
+  { id: 's4', type: 'known', anNumber: 'AN 33478', serology: makeSero('negative', 'positive', 'pending'), observations: '', consent: 'none' },
+  { id: 's5', type: 'known', anNumber: 'AN 99012', serology: makeSero('negative', 'negative', 'negative'), observations: 'Paciente sin factores de riesgo', consent: 'written' },
+  { id: 's6', type: 'unknown', anNumber: '', serology: makeSero('pending', 'pending', 'pending'), observations: 'Fuente no identificada', consent: 'none' },
+  { id: 's7', type: 'unknown', anNumber: '', serology: makeSero('pending', 'pending', 'pending'), observations: 'Paciente no identificado en intubación', consent: 'none' },
+  { id: 's8', type: 'unknown', anNumber: '', serology: makeSero('pending', 'pending', 'pending'), observations: 'Salpicadura en piel no intacta, fuente no identificada', consent: 'none' },
 ];
 
 export const MOCK_ACCIDENTS: Accident[] = [
@@ -69,8 +82,8 @@ export function buildEpisodeDescription(accident: Accident, worker: Worker, sour
   const missingWorkerSerology = Object.values(accident.workerSerology).some(s => s === 'pending');
   if (missingWorkerSerology) return 'Faltan serologia trabajador';
   for (let source of sources) {
-    const missingSourceSerology = Object.values(source.serology).some(s => s.result === 'pending');
-    if (missingSourceSerology) {
+    const srcSero = source.serology;
+    if (srcSero.vih === 'pending' || srcSero.vhc === 'pending' || srcSero.vhbCore === 'pending') {
       return 'Faltan serologia fuente';
     }
   }
@@ -112,7 +125,8 @@ export function saveNewAccident(accidentData: AccidentFormData): Accident {
 
   for (let source of accidentData.sources){
     newSourcesId.push(`s${Number(MOCK_SOURCES[MOCK_SOURCES.length - 1].id.split('s')[1])}`); 
-    if (Object.values(source['serology']).some(result => result === 'pending')){
+    const s = source['serology'] as any;
+    if (s.vih === 'pending' || s.vhc === 'pending' || s.vhbCore === 'pending'){
       status = 'incomplete';
     }
   }
@@ -138,7 +152,8 @@ export function editExistingAccident(accidentData: AccidentFormData, accidentId:
   let status = 'complete';
   const index = MOCK_ACCIDENTS.findIndex(mock => mock.id === accidentId);
   for (let source of accidentData.sources){
-    if (Object.values(source['serology']).some(result => result === 'pending')){
+    const s = source['serology'] as any;
+    if (s.vih === 'pending' || s.vhc === 'pending' || s.vhbCore === 'pending'){
       status = 'incomplete';
     }
   }
